@@ -78,26 +78,52 @@ public class EmployeeController {
 
     /**
      * save
+     *
      * @param employeeDTO
      * @return
      */
     @ApiOperation(value = "save employee")
     @PostMapping("")
-    public Result insert(@RequestBody EmployeeDTO employeeDTO){
+    public Result insert(@RequestBody EmployeeDTO employeeDTO) {
         employeeService.save(employeeDTO);
         return Result.success();
     }
 
     /**
-     *employee page query
+     * employee page query
+     *
      * @param employeePageQueryDTO
      * @return
      */
-    @ApiOperation(value="page employee")
+    @ApiOperation(value = "page employee")
     @GetMapping("/page")
-    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
+    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO) {
         PageResult pageResult = employeeService.page(employeePageQueryDTO);
         return Result.success(pageResult);
     }
 
+    /**
+     * Stauts
+     *
+     * @param id
+     */
+    @ApiOperation(value = "employee id")
+    @PostMapping("/status/{id}")
+    public Result status(Long id) {
+        employeeService.status(id);
+        return Result.success();
+    }
+
+    @ApiOperation("get by id")
+    @GetMapping("/{id}")
+    public Result<Employee> getById(@PathVariable Long id) {
+        return Result.success(employeeService.getById(id));
+    }
+
+    @ApiOperation("put employee")
+    @PutMapping
+    public Result put(@RequestBody EmployeeDTO employeeDTO) {
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
 }
